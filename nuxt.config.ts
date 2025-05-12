@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
-import Aura from '@primeuix/themes/aura'
+// import Aura from '@primeuix/themes/aura'
+import  Aura from '@primevue/themes/aura';
 
 export default defineNuxtConfig({
   ssr: false,
@@ -8,9 +9,12 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   runtimeConfig: {
     public: {
-      apiBaseUrl: process.env.API_BASE_URL || 'https://api.example.com'
+      baseAPI: process.env.API_BASE_URL || 'https://api.example.com'
     }
   },
+   css: [
+    '~/assets/css/tailwind.css'
+  ],
   plugins: [
     '~/plugins/api.ts'
   ],
@@ -23,6 +27,7 @@ export default defineNuxtConfig({
     '@nuxt/scripts',
     '@nuxt/test-utils',
     '@primevue/nuxt-module',
+    '@nuxtjs/tailwindcss',
   ],
 
   primevue: {
