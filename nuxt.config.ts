@@ -6,14 +6,20 @@ import  Aura from '@primevue/themes/aura';
 export default defineNuxtConfig({
   ssr: false,
   compatibilityDate: '2024-11-01',
-  devtools: { enabled: true },
+  devtools: { enabled: false },
+  vite: {
+    server: {
+      allowedHosts: true,
+    }
+  },
   runtimeConfig: {
     public: {
       baseAPI: process.env.API_BASE_URL || 'https://api.example.com'
     }
   },
    css: [
-    '~/assets/css/tailwind.css'
+    'primeicons/primeicons.css',
+    '~/assets/css/tailwind.css',
   ],
   plugins: [
     '~/plugins/api.ts'
@@ -38,6 +44,7 @@ export default defineNuxtConfig({
         'FormField',
         'Breadcrumb',
         'Button',
+        'Carousel',
         'Calendar',
         'Card',
         'Checkbox',

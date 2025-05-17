@@ -1,12 +1,16 @@
 import { defineStore } from 'pinia'
-var { $api, $toast } = useNuxtApp()
+
+interface LoginPayload {
+  email: string
+  password: string
+}
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     users: null,
     loading: false,
     token: null,
-    error: null as any | null,
+    error: null as unknown | null,
   }),
   getters: {
     nuxt: () => useNuxtApp(),
@@ -14,12 +18,15 @@ export const useAuthStore = defineStore('auth', {
     $toast: () => useNuxtApp().$toast,
   },
   actions: {
-    async login(payload: any) {
-      const nuxtApp = useNuxtApp()
-
+    async login(payload: LoginPayload) {
+      this.loading = true
       try {
+       const formData = new FormData();
+        formData.append('email', payload.email);
+        formData.append('password', payload.password);
+
         const res = await this.$api.post(`/api/v1/auth/login`, {
-          body: payload
+          body: formData
         })
 
         this.token = res.data.token
@@ -35,7 +42,9 @@ export const useAuthStore = defineStore('auth', {
         this.$toast.success('Login successful')
         return res
       } catch (e) {
+        this.error = e
       } finally {
+        this.loading = false
       }
     },
   },
